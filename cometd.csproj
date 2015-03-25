@@ -139,6 +139,7 @@
     <Compile Include="cometd\client\ext\TimesyncClientExtension.cs" />
     <Compile Include="cometd\client\transport\ClientTransport.cs" />
     <Compile Include="cometd\client\transport\HttpClientTransport.cs" />
+    <Compile Include="cometd\client\transport\IMessageClientTransport.cs" />
     <Compile Include="cometd\client\transport\LongPollingTransport.cs" />
     <Compile Include="cometd\client\transport\TransportException.cs" />
     <Compile Include="cometd\client\transport\TransportListener.cs" />

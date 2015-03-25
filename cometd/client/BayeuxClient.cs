@@ -54,6 +54,11 @@ namespace Cometd.Client
             foreach (String transportName in transportRegistry.KnownTransports)
             {
                 ClientTransport clientTransport = transportRegistry.getTransport(transportName);
+                if (clientTransport is IMessageClientTransport)
+                {
+                    ((IMessageClientTransport)clientTransport).setMessageTransportListener(publishListener);
+                }
+
                 if (clientTransport is HttpClientTransport)
                 {
                     HttpClientTransport httpTransport = (HttpClientTransport)clientTransport;
