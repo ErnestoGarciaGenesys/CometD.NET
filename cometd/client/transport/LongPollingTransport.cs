@@ -20,10 +20,12 @@ namespace Cometd.Client.Transport
         private List<TransportExchange> _exchanges = new List<TransportExchange>();
         //private bool _aborted;
         private bool _appendMessageType;
+        private readonly Action<HttpWebRequest> customizeRequest;
 
-        public LongPollingTransport(IDictionary<String, Object> options)
+        public LongPollingTransport(IDictionary<String, Object> options, Action<HttpWebRequest> customizeRequest = null)
             : base("long-polling", options)
         {
+            this.customizeRequest = customizeRequest;
         }
 
         public override bool accept(String bayeuxVersion)
@@ -157,6 +159,9 @@ namespace Cometd.Client.Transport
             if (request.CookieContainer == null)
                 request.CookieContainer = new CookieContainer();
             request.CookieContainer.Add(getCookieCollection());
+
+            if (customizeRequest != null)
+                customizeRequest(request);
 
             JavaScriptSerializer jsonParser = new JavaScriptSerializer();
             String content = jsonParser.Serialize(ObjectConverter.ToListOfDictionary(messages));
